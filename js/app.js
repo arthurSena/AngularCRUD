@@ -1,0 +1,1 @@
+var app = angular.module("CRUD", ['angularUtils.directives.dirPagination']);

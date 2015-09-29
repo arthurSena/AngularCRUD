@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+CRUD		
+</title>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+</head>
+<style>
+	.selected {
+	    background-color:#E6E6E6;
+	    color:black;
+	    font-weight:bold;
+	}
+</style>
+<body ng-app="CRUD">
+
+ <!-- Intro Section -->
+<div class="container-fluid" ng-controller="MainController">
+	  <div class="jumbotron">
+		<h1>This CRUD was built in order to learn AngularJS framework</h1> 
+		<p>I generated some random data to fill the system.</p>
+	</div>
+
+    <div class="row" style="border:0.3vw solid grey; text-align:center;">
+		  <div class="col-sm-4">
+		  			 <button style="text-align:center;margin:2% auto;" type="button" class="btn btn-primary glyphicon glyphicon-plus" data-toggle="modal" data-target="#addingPopup">&nbspAdd </button>
+		  </div>
+		  <div class="col-sm-4">
+		  			<button style="text-align:center;margin:2% auto;" type="button" class="btn btn-primary glyphicon glyphicon-plus">&nbspEdit</button>
+		  </div>
+		  <div class="col-sm-4">
+		  			<button style="text-align:center;margin:2% auto;" type="button" class="btn btn-primary glyphicon glyphicon-plus">&nbspDelete</button>
+		  </div>
+
+        
+    </div><br>
+
+	<table class="table table-hover table-bordered" style="text-align:center;border:1vw solid grey;">
+    <thead>
+      <tr>	
+        <th ng-click="sort('first_name')" class="text-center">Firstname
+        	<span class="glyphicon sort-icon" ng-show="sortKey=='first_name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th  ng-click="sort('last_name')"  class="text-center">Lastname
+        	 <span class="glyphicon sort-icon" ng-show="sortKey=='last_name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th   ng-click="sort('email')" class="text-center">Email
+        	<span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr dir-paginate="contact in contacts|orderBy:sortKey:reverse|filter:search|itemsPerPage:10" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+      	<td>{{contact.first_name}}</td>
+      	<td>{{contact.last_name}}</td>
+      	<td>{{contact.email}}</td>
+      </tr>
+    </tbody>
+  </table>
+  	<form class="form-inline" style="border:2px solid red; text-align:center;">
+        <div class="form-group" >
+            <label >Search</label>
+            <input type="text" ng-model="search" class="form-control" placeholder="Search">
+        </div>
+        
+    </form>
+
+
+  <dir-pagination-controls
+        max-size="10"
+        direction-links="true"
+        boundary-links="true" >
+    </dir-pagination-controls>
+
+    <!-- Modal -->
+  <div class="modal fade" id="addingPopup" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Contact</h4>
+        	
+        </div>
+        <div class="modal-body">
+			          	<form role="form">
+						    <div class="form-group">
+
+						       <label for="name">First Name:</label>
+						       <input type="text" class="form-control" id="name" placeholder="Enter Name" ng-model="temp.first_name">
+
+						       <label for="last">Last Name:</label>
+						       <input type="last" class="form-control" id="last" placeholder="Enter Last Name" ng-model="temp.last_name">
+
+						       <label for="email">Email:</label>
+						       <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="temp.email">
+
+						       <label for="country">Select Country:</label>
+						      <select class="form-control" id="country" ng-model="temp.country">
+						        <option>BR</option>
+						        <option>USA</option>
+						        <option>ITA</option>
+						        <option>GER</option>
+						      </select>
+						    </div>
+						    <button type="submit" class="btn btn-default" ng-click="addContact()" data-dismiss="modal">Submit</button>
+			  			</form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+  	<!-- Modules -->
+    <script src="js/app.js"></script>
+
+    <!-- Libraries -->
+
+    <script src="lib/dirPagination.js"></script>
+
+        <!-- Services -->
+    <script type="text/javascript" src="js/services/dataService.js"></script>
+
+    <!-- Controllers -->
+    <script src="js/controllers/mainController.js"></script>
+
+
+</html>
